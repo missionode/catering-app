@@ -1,0 +1,84 @@
+/* This stylesheet is only applied when printing */
+@media print {
+    body {
+        font-family: sans-serif;
+        color: #000;
+    }
+
+    /* Hide all non-essential UI elements */
+    #sidebar,
+    header,
+    #sidebar-overlay,
+    #add-dish-modal,
+    #add-dish-button,
+    #save-event-button,
+    #print-button,
+    .remove-dish-btn,
+    #client-search-results,
+    #date-warning {
+        display: none !important;
+    }
+
+    /* Reset the layout for a simple, single-column print view */
+    #app-wrapper {
+        display: block;
+    }
+
+    main {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* Remove shadows and backgrounds, and add simple borders for clarity */
+    .bg-white, .rounded-xl, .shadow-sm {
+        background: transparent !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        padding: 1rem !important;
+        margin-bottom: 1.5rem !important;
+        page-break-inside: avoid; /* Prevents main sections from splitting across pages */
+    }
+
+    /* Prevent individual menu items from splitting across pages */
+    #menu-items-container > div {
+        page-break-inside: avoid;
+    }
+    
+    /* Make the page title prominent */
+    #page-title {
+        text-align: center;
+        font-size: 22pt;
+        border-bottom: 2px solid #333;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    /* Make form fields look like static text */
+    input, select {
+        border: none !important;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        padding: 0 !important;
+        font-size: 11pt;
+    }
+    
+    /* Ensure the client's name is clearly visible */
+    #client-search {
+        font-weight: bold;
+    }
+    
+    /* Style the menu items for clarity */
+    .menu-qty-input {
+        display: none; /* Hide the input box */
+    }
+    .flex.items-center.gap-2 > label {
+        display: none; /* Hide the "Qty:" label */
+    }
+    /* Add the quantity as text after the dish price */
+    .flex.items-center.gap-2::after {
+        content: ' (Quantity: ' attr(data-quantity) ')';
+        font-size: 10pt;
+        color: #555;
+    }
+}

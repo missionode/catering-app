@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences - Catering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="h-full font-['Poppins',_sans-serif] text-slate-800">
+    <div id="app-wrapper" class="flex h-full">
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="max-w-4xl mx-auto">
+                <h1 id="page-title" class="text-3xl font-bold text-slate-900"></h1>
+
+                <div class="mt-8 space-y-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <h2 id="autosave-title" class="text-xl font-semibold"></h2>
+                        <div id="autosave-status-inactive" class="mt-4">
+                            <p id="autosave-desc" class="text-slate-600"></p>
+                            <button id="autosave-button-activate" class="mt-4 bg-emerald-500 text-white px-4 py-2 rounded-lg shadow hover:bg-emerald-600 transition-colors"></button>
+                        </div>
+                        <div id="autosave-status-active" class="mt-4 hidden">
+                            <p class="text-slate-600">Auto-save is configured to use the following file:</p>
+                            <p id="autosave-filename" class="mt-2 font-medium text-indigo-600 bg-indigo-50 p-2 rounded-md"></p>
+                            <p id="autosave-permission-status" class="mt-2 text-sm font-medium h-4"></p>
+                            <p id="autosave-sync-status" class="mt-1 text-sm text-slate-500 h-4"></p>
+                            <button id="autosave-button-forget" class="mt-4 text-sm text-red-600 hover:underline">Forget this file and disable auto-save</button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <h2 id="import-export-title" class="text-xl font-semibold"></h2>
+                        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                            <div>
+                                <p id="export-desc" class="text-slate-600"></p>
+                                <button id="export-button" class="mt-2 bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition-colors"></button>
+                            </div>
+                            <div>
+                                <p id="import-desc" class="text-slate-600"></p>
+                                <button id="import-button" class="mt-2 bg-sky-400 text-white px-4 py-2 rounded-lg shadow hover:bg-sky-500 transition-colors"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

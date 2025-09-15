@@ -1,0 +1,73 @@
+{
+  "appName": "Catering",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "events": "Events",
+    "clients": "Clients",
+    "dishes": "Dish Library",
+    "preferences": "Preferences",
+    "help": "Help"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back!",
+    "upcomingEvents": "Upcoming Events"
+  },
+  "events": {
+    "title": "Event Management",
+    "allEvents": "All Events",
+    "addNew": "Add New Event"
+  },
+  "eventDetail": {
+    "createTitle": "Create New Event",
+    "editTitle": "Edit Event",
+    "eventDetails": "Event Details",
+    "clientName": "Client Name",
+    "eventDate": "Event Date",
+    "venue": "Venue",
+    "guestCount": "Guest Count",
+    "status": "Status",
+    "menuBuilder": "Menu & Budget Builder",
+    "addDish": "Add Dish",
+    "totalCost": "Total Estimated Cost",
+    "saveEvent": "Save Event"
+  },
+  "clients": {
+    "title": "Client Management",
+    "allClients": "All Clients",
+    "addNew": "Add New Client",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "dishes": {
+    "title": "Dish Library",
+    "allDishes": "All Dishes",
+    "addNew": "Add New Dish",
+    "dishName": "Dish Name",
+    "category": "Category",
+    "price": "Price (per serving)",
+    "description": "Description",
+    "saveDish": "Save Dish"
+  },
+  "preferences": {
+    "title": "Preferences & Data",
+    "importExport": "Import / Export Data",
+    "importDesc": "Load data from a backup file. This will overwrite all current data.",
+    "importButton": "Import from File",
+    "exportDesc": "Save all current data to a local backup file.",
+    "exportButton": "Export to File",
+    "autoSave": "Auto-Save",
+    "autoSaveDesc": "Automatically back up data to a chosen local file.",
+    "autoSaveButton": "Set Auto-Save File"
+  },
+  "help": {
+    "title": "Help & FAQ"
+  },
+  "general": {
+    "actions": "Actions",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close"
+  }
+}

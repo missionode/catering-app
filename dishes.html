@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dish Library - Catering</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="h-full font-['Poppins',_sans-serif] text-slate-800">
+    <div id="app-wrapper" class="flex h-full">
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center justify-between">
+                    <h1 id="page-title" class="text-3xl font-bold text-slate-900"></h1>
+                    <button id="add-new-button" class="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition-colors"></button>
+                </div>
+
+                <div class="mt-8 bg-white p-6 rounded-xl shadow-sm">
+                     <h2 id="sub-title" class="text-xl font-semibold mb-4"></h2>
+                     <div id="dishes-list" class="overflow-x-auto">
+                        </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="dish-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-md">
+            <div class="p-6 border-b">
+                <h3 id="modal-title" class="text-xl font-semibold"></h3>
+            </div>
+            <form id="dish-form" class="p-6 space-y-4">
+                <input type="hidden" id="dish-id">
+                <div>
+                    <label id="dish-name-label" for="dish-name" class="block text-sm font-medium text-slate-700"></label>
+                    <input type="text" id="dish-name" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label id="dish-category-label" for="dish-category" class="block text-sm font-medium text-slate-700"></label>
+                    <input type="text" id="dish-category" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label id="dish-price-label" for="dish-price" class="block text-sm font-medium text-slate-700"></label>
+                    <input type="number" id="dish-price" step="0.01" required class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label id="dish-description-label" for="dish-description" class="block text-sm font-medium text-slate-700"></label>
+                    <textarea id="dish-description" rows="3" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+                </div>
+            </form>
+            <div class="p-6 bg-slate-50 rounded-b-xl flex justify-end gap-4">
+                <button type="button" id="modal-close-button" class="bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-300 hover:bg-slate-100"></button>
+                <button type="submit" form="dish-form" id="modal-save-button" class="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700"></button>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>
