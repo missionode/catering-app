@@ -20,6 +20,7 @@ const pageInitializers = {
     clients: () => import('./pages/clients.js').then(module => module.init(content.clients)),
     dishes: () => import('./pages/dishes.js').then(module => module.init(content.dishes)),
     preferences: () => import('./pages/preferences.js').then(module => module.init(content.preferences)),
+    help: () => import('./pages/help.js').then(module => module.init(content.help))
 };
 
 async function loadContent() {
@@ -36,7 +37,6 @@ function renderSidebar() {
     const nav = content.navigation;
     const appName = content.appName;
     
-    // Get the current filename to correctly highlight the active link
     const path = window.location.pathname;
     const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
 
@@ -167,18 +167,14 @@ async function main() {
     initMobileMenu();
     await startAutoSave();
 
-    // --- FIX IS HERE ---
-    // Get the filename from the full path
     let pageFile = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
     
-    // Default to index.html if the path is empty (like the root of the site)
-    if (pageFile === '') {
+    if (pageFile === '' || pageFile.endsWith('/')) { // Handles root like "/", "/repo/", etc.
         pageFile = 'index.html';
     }
     
-    // Look up the route using the correct format
-    const pageKey = routes['/' + pageFile];
-    // --- END OF FIX ---
+    const routePath = '/' + pageFile;
+    const pageKey = routes[routePath];
     
     if (pageKey && pageInitializers[pageKey]) {
         try {
