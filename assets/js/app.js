@@ -6,7 +6,6 @@ let autoSaveInterval = null;
 
 const routes = {
     '/index.html': 'dashboard',
-    '/': 'dashboard',
     '/events.html': 'events',
     '/event-detail.html': 'events',
     '/clients.html': 'clients',
@@ -36,8 +35,11 @@ async function loadContent() {
 function renderSidebar() {
     const nav = content.navigation;
     const appName = content.appName;
-    const currentPath = window.location.pathname.split('/').pop() || 'index.html';
     
+    // Get the current filename to correctly highlight the active link
+    const path = window.location.pathname;
+    const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+
     const sidebarHTML = `
         <aside id="sidebar" class="w-64 bg-indigo-600 text-white flex flex-col fixed inset-y-0 left-0 z-30 transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0">
             <div class="h-20 flex items-center justify-center border-b border-indigo-700">
@@ -49,14 +51,14 @@ function renderSidebar() {
                 </div>
             </div>
             <nav class="flex-1 p-4 space-y-2">
-                <a href="index.html" class="nav-link ${currentPath === 'index.html' ? 'active' : ''}">${nav.dashboard}</a>
-                <a href="events.html" class="nav-link ${['events.html', 'event-detail.html'].includes(currentPath) ? 'active' : ''}">${nav.events}</a>
-                <a href="clients.html" class="nav-link ${currentPath === 'clients.html' ? 'active' : ''}">${nav.clients}</a>
-                <a href="dishes.html" class="nav-link ${currentPath === 'dishes.html' ? 'active' : ''}">${nav.dishes}</a>
+                <a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">${nav.dashboard}</a>
+                <a href="events.html" class="nav-link ${['events.html', 'event-detail.html'].includes(currentPage) ? 'active' : ''}">${nav.events}</a>
+                <a href="clients.html" class="nav-link ${currentPage === 'clients.html' ? 'active' : ''}">${nav.clients}</a>
+                <a href="dishes.html" class="nav-link ${currentPage === 'dishes.html' ? 'active' : ''}">${nav.dishes}</a>
             </nav>
             <div class="p-4 border-t border-indigo-700 space-y-2">
-                 <a href="preferences.html" class="nav-link ${currentPath === 'preferences.html' ? 'active' : ''}">${nav.preferences}</a>
-                 <a href="help.html" class="nav-link ${currentPath === 'help.html' ? 'active' : ''}">${nav.help}</a>
+                 <a href="preferences.html" class="nav-link ${currentPage === 'preferences.html' ? 'active' : ''}">${nav.preferences}</a>
+                 <a href="help.html" class="nav-link ${currentPage === 'help.html' ? 'active' : ''}">${nav.help}</a>
                  <div id="autosave-indicator" class="px-1 pt-2"></div>
             </div>
         </aside>
@@ -78,7 +80,7 @@ function renderSidebar() {
 function initMobileMenu() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
-    const pageTitle = document.getElementById('page-title'); // Corrected ID
+    const pageTitle = document.getElementById('page-title');
 
     if (!pageTitle) return;
 
@@ -165,8 +167,18 @@ async function main() {
     initMobileMenu();
     await startAutoSave();
 
-    const path = window.location.pathname === '/' ? '/index.html' : window.location.pathname;
-    const pageKey = routes[path];
+    // --- FIX IS HERE ---
+    // Get the filename from the full path
+    let pageFile = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+    
+    // Default to index.html if the path is empty (like the root of the site)
+    if (pageFile === '') {
+        pageFile = 'index.html';
+    }
+    
+    // Look up the route using the correct format
+    const pageKey = routes['/' + pageFile];
+    // --- END OF FIX ---
     
     if (pageKey && pageInitializers[pageKey]) {
         try {
