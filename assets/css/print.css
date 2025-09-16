@@ -15,8 +15,13 @@
     #print-button,
     .remove-dish-btn,
     #client-search-results,
-    #date-warning {
+    #date-warning,
+    #web-event-details { /* Hide the original event details form */
         display: none !important;
+    }
+    
+    .print-only {
+        display: block !important;
     }
 
     /* Reset the layout for a simple, single-column print view */
@@ -39,21 +44,14 @@
         page-break-inside: avoid; /* Prevents main sections from splitting across pages */
     }
 
-    /* Prevent individual menu items from splitting across pages */
     #menu-items-container > div {
         page-break-inside: avoid;
     }
     
-    /* Make the page title prominent */
     #page-title {
-        text-align: center;
-        font-size: 22pt;
-        border-bottom: 2px solid #333;
-        padding-bottom: 1rem;
-        margin-bottom: 2rem;
+        display: none !important;
     }
     
-    /* Make form fields look like static text */
     input, select {
         border: none !important;
         -webkit-appearance: none;
@@ -61,24 +59,55 @@
         appearance: none;
         padding: 0 !important;
         font-size: 11pt;
+        font-family: sans-serif;
     }
     
-    /* Ensure the client's name is clearly visible */
     #client-search {
         font-weight: bold;
     }
     
-    /* Style the menu items for clarity */
     .menu-qty-input {
-        display: none; /* Hide the input box */
+        display: none;
     }
     .flex.items-center.gap-2 > label {
-        display: none; /* Hide the "Qty:" label */
+        display: none;
     }
-    /* Add the quantity as text after the dish price */
     .flex.items-center.gap-2::after {
         content: ' (Quantity: ' attr(data-quantity) ')';
         font-size: 10pt;
         color: #555;
+    }
+
+    /* Invoice Header Styles */
+    .print-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #333;
+    }
+    .print-header .logo-mark {
+        font-size: 2.5rem;
+        font-weight: bold;
+        background-color: #333;
+        color: #fff;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+    }
+    .print-header .company-details {
+        text-align: right;
+    }
+    .print-header h2 {
+        margin: 0;
+        font-size: 1.5rem;
+    }
+    .print-header p {
+        margin: 0;
+        font-size: 0.9rem;
     }
 }

@@ -10,17 +10,42 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/print.css" media="print">
-    <link rel="icon" type="image/x-icon" href="/catering-app/favicon.ico">
-
 </head>
 <body class="h-full font-['Poppins',_sans-serif] text-slate-800">
     <div id="app-wrapper" class="flex h-full">
         <main class="flex-1 p-8 overflow-y-auto">
+            <div class="print-only hidden">
+                <div class="print-header">
+                    <div class="logo-mark" id="print-logo-mark">C</div>
+                    <div class="company-details">
+                        <h2 id="print-company-name">Catering</h2>
+                        <p id="print-company-address"></p>
+                        <p id="print-company-contact"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-8">
+                    <div id="print-client-details">
+                        <h3 class="font-bold text-lg mb-1">Bill To:</h3>
+                        <p id="print-client-name" class="font-semibold"></p>
+                        <p id="print-client-address" class="whitespace-pre-wrap"></p>
+                        <p id="print-client-contact"></p>
+                    </div>
+                    <div id="print-event-info" class="text-right">
+                        <h2 class="font-bold text-2xl mb-2">EVENT ORDER</h2>
+                        <p><span class="font-semibold">Event ID:</span> <span id="print-event-id"></span></p>
+                        <p><span class="font-semibold">Event Date:</span> <span id="print-event-date"></span></p>
+                        <p><span class="font-semibold">Venue:</span> <span id="print-event-venue"></span></p>
+                        <p><span class="font-semibold">Guests:</span> <span id="print-event-guests"></span></p>
+                        <p><span class="font-semibold">Status:</span> <span id="print-event-status"></span></p>
+                    </div>
+                </div>
+            </div>
+
             <div class="max-w-4xl mx-auto">
                 <h1 id="page-title" class="text-3xl font-bold text-slate-900"></h1>
                 
                 <form id="event-form" class="mt-8 space-y-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <div id="web-event-details" class="bg-white p-6 rounded-xl shadow-sm">
                         <h2 id="event-details-title" class="text-xl font-semibold mb-6"></h2>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
@@ -28,26 +53,25 @@
                                 <div class="relative mt-1">
                                     <input type="text" id="client-search" placeholder="Search for a client..." autocomplete="off" class="w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                     <input type="hidden" id="client-id">
-                                    <div id="client-search-results" class="absolute z-10 w-full bg-white border border-slate-300 rounded-md mt-1 hidden max-h-60 overflow-y-auto shadow-lg">
-                                        </div>
+                                    <div id="client-search-results" class="absolute z-10 w-full bg-white border border-slate-300 rounded-md mt-1 hidden max-h-60 overflow-y-auto shadow-lg"></div>
                                 </div>
                             </div>
                             <div>
                                 <label id="event-date-label" for="event-date" class="block text-sm font-medium text-slate-700"></label>
-                                <input type="datetime-local" id="event-date" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <input type="datetime-local" id="event-date" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm">
                                 <p id="date-warning" class="text-sm text-amber-600 mt-1 h-4"></p>
                             </div>
                             <div class="md:col-span-2">
                                 <label id="venue-label" for="venue" class="block text-sm font-medium text-slate-700"></label>
-                                <input type="text" id="venue" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <input type="text" id="venue" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm">
                             </div>
                             <div>
                                 <label id="guest-count-label" for="guest-count" class="block text-sm font-medium text-slate-700"></label>
-                                <input type="number" id="guest-count" min="1" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <input type="number" id="guest-count" min="1" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm">
                             </div>
                             <div>
                                 <label id="status-label" for="status" class="block text-sm font-medium text-slate-700"></label>
-                                <select id="status" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <select id="status" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm">
                                     <option>Tentative</option>
                                     <option>Confirmed</option>
                                     <option>Completed</option>
@@ -62,11 +86,20 @@
                             <h2 id="menu-builder-title" class="text-xl font-semibold"></h2>
                             <button type="button" id="add-dish-button" class="bg-sky-400 text-white px-4 py-2 rounded-lg shadow hover:bg-sky-500 transition-colors"></button>
                         </div>
-                        <div id="menu-items-container" class="space-y-4">
+                        <div id="menu-items-container" class="space-y-4"></div>
+                        <div class="mt-6 pt-4 border-t border-slate-200 space-y-2 text-right">
+                           <div class="flex justify-end items-center gap-4">
+                               <span id="total-cost-label" class="text-lg font-semibold"></span>
+                               <span id="total-cost-value" class="text-2xl font-bold text-indigo-600 w-40 text-left">₹0.00</span>
                            </div>
-                        <div class="mt-6 pt-4 border-t border-slate-200 text-right">
-                           <span id="total-cost-label" class="text-lg font-semibold"></span>
-                           <span id="total-cost-value" class="text-2xl font-bold text-indigo-600 ml-2">₹0.00</span>
+                           <div class="flex justify-end items-center gap-4">
+                               <label id="advance-paid-label" for="advance-paid" class="text-lg font-semibold"></label>
+                               <input type="number" id="advance-paid" min="0" class="w-40 text-left rounded-md border-slate-300 shadow-sm">
+                           </div>
+                           <div class="flex justify-end items-center gap-4 mt-2 pt-2 border-t">
+                               <span id="balance-payable-label" class="text-lg font-bold"></span>
+                               <span id="balance-payable-value" class="text-2xl font-bold text-emerald-600 w-40 text-left">₹0.00</span>
+                           </div>
                         </div>
                     </div>
                     
@@ -80,25 +113,7 @@
     </div>
 
     <div id="add-dish-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4 z-20">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl">
-            <div class="p-6 border-b">
-                <h3 class="text-xl font-semibold">Add Dishes to Menu</h3>
-                <div class="mt-4">
-                    <input type="search" id="dish-search-input" placeholder="Search by dish name or category..." class="w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                </div>
-            </div>
-            <div id="dish-library-list" class="p-6 max-h-96 overflow-y-auto">
-                </div>
-            <div class="p-6 bg-slate-50 rounded-b-xl flex justify-end items-center gap-4">
-                <div class="flex-1 text-left">
-                    <p class="text-sm text-slate-600">Estimate for selection (x Guest Count):</p>
-                    <p id="modal-estimate" class="text-lg font-bold text-indigo-600">₹0.00</p>
-                </div>
-                <button type="button" id="modal-close-button" class="bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-300 hover:bg-slate-100">Cancel</button>
-                <button type="button" id="modal-add-dishes-button" class="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700">Add Selected Dishes</button>
-            </div>
         </div>
-    </div>
     
     <script type="module" src="assets/js/app.js"></script>
 </body>

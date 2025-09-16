@@ -1,5 +1,10 @@
 {
   "appName": "Catering",
+  "companyDetails": {
+    "address": "123 Culinary Ave, Foodie Town, 12345",
+    "phone": "+91-9876543210",
+    "email": "orders@cateringapp.example"
+  },
   "navigation": {
     "dashboard": "Dashboard",
     "events": "Events",
@@ -30,6 +35,8 @@
     "menuBuilder": "Menu & Budget Builder",
     "addDish": "Add Dish",
     "totalCost": "Total Estimated Cost",
+    "advancePaid": "Advance Paid",
+    "balancePayable": "Balance Payable",
     "saveEvent": "Save Event"
   },
   "clients": {
@@ -38,7 +45,8 @@
     "addNew": "Add New Client",
     "name": "Name",
     "email": "Email",
-    "phone": "Phone"
+    "phone": "Phone",
+    "address": "Address"
   },
   "dishes": {
     "title": "Dish Library",

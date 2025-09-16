@@ -24,13 +24,16 @@ function setupEventListeners() {
 
 function renderClientsTable() {
     const clients = storage.getClients();
-    const headers = ['Name', 'Email', 'Phone', 'Actions'];
+    const headers = ['Name', 'Contact', 'Address', 'Actions'];
 
     const tableHTML = renderTable(headers, clients, (client) => `
         <tr class="border-b border-slate-100">
             <td class="p-4 font-medium">${client.name}</td>
-            <td class="p-4 text-slate-600">${client.email}</td>
-            <td class="p-4 text-slate-600">${client.phone}</td>
+            <td class="p-4 text-slate-600 text-sm">
+                <div>${client.email}</div>
+                <div>${client.phone}</div>
+            </td>
+            <td class="p-4 text-slate-600 text-sm">${client.address || ''}</td>
             <td class="p-4 space-x-4">
                 <button data-id="${client.id}" class="edit-btn text-indigo-600 hover:underline">Edit</button>
                 <button data-id="${client.id}" class="delete-btn text-red-600 hover:underline">Delete</button>
@@ -45,6 +48,7 @@ function setupModal() {
     document.getElementById('client-name-label').textContent = content.name;
     document.getElementById('client-email-label').textContent = content.email;
     document.getElementById('client-phone-label').textContent = content.phone;
+    document.getElementById('client-address-label').textContent = content.address;
 }
 
 function handleFormSubmit(e) {
@@ -54,6 +58,7 @@ function handleFormSubmit(e) {
         name: document.getElementById('client-name').value,
         email: document.getElementById('client-email').value,
         phone: document.getElementById('client-phone').value,
+        address: document.getElementById('client-address').value,
     };
     storage.saveClient(client);
     renderClientsTable();
@@ -86,6 +91,7 @@ function openModal(client = null) {
         document.getElementById('client-name').value = client.name;
         document.getElementById('client-email').value = client.email;
         document.getElementById('client-phone').value = client.phone;
+        document.getElementById('client-address').value = client.address || '';
     } else {
         document.getElementById('client-id').value = '';
     }
