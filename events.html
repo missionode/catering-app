@@ -9,19 +9,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="/catering-app/favicon.ico">
-
 </head>
 <body class="h-full font-['Poppins',_sans-serif] text-slate-800">
     <div id="app-wrapper" class="flex h-full">
-        <main class="flex-1 p-8 overflow-y-auto">
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto">
             <div class="max-w-7xl mx-auto">
                 <div class="flex items-center justify-between">
                     <h1 id="page-title" class="text-3xl font-bold text-slate-900"></h1>
                     <a href="event-detail.html" id="add-new-button" class="bg-indigo-600 text-white px-4 py-2 rounded-lg shadow hover:bg-indigo-700 transition-colors"></a>
                 </div>
 
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
                     <div class="md:col-span-2">
                         <label for="search-events" class="sr-only">Search Events</label>
                         <input type="search" id="search-events" placeholder="Search by client name or venue..." class="w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
@@ -40,9 +38,15 @@
                         <label for="filter-date" class="sr-only">Filter by Date</label>
                         <input type="date" id="filter-date" class="w-full rounded-md border-slate-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-slate-500">
                     </div>
+                    <div class="md:col-span-4 flex justify-end">
+                        <label class="flex items-center gap-2 text-sm font-medium text-slate-700">
+                            <input type="checkbox" id="filter-uncollected" class="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                            Show Uncollected Payments Only
+                        </label>
+                    </div>
                 </div>
 
-                <div class="mt-4 bg-white p-6 rounded-xl shadow-sm" style="overflow: scroll;">
+                <div class="mt-4 bg-white p-6 rounded-xl shadow-sm">
                      <h2 id="sub-title" class="text-xl font-semibold mb-4"></h2>
                      <div id="events-table-container">
                         </div>
@@ -50,6 +54,12 @@
             </div>
         </main>
     </div>
+
+    <div id="status-popover" class="hidden absolute z-20 bg-white rounded-lg shadow-xl border w-40">
+        <ul id="status-options-list" class="p-1 text-sm text-slate-700">
+            </ul>
+    </div>
+
     <script type="module" src="assets/js/app.js"></script>
 </body>
 </html>

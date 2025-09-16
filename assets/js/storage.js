@@ -43,12 +43,18 @@ function saveItem(type, item) {
     if (item.id) {
         const index = data[type].findIndex(d => d.id === item.id);
         if (index > -1) {
-            data[type][index] = { ...data[type][index], ...item };
+            // Update existing item, preserve original creation date
+            const existingItem = data[type][index];
+            data[type][index] = { ...existingItem, ...item };
         } else {
+            // This case should ideally not happen for updates, but as a fallback...
+            item.createdAt = new Date().toISOString();
             data[type].push(item);
         }
     } else {
+        // Create new item
         item.id = Date.now().toString();
+        item.createdAt = new Date().toISOString();
         data[type].push(item);
     }
     saveData(data);

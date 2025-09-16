@@ -8,86 +8,93 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.5/dist/typography.min.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="/catering-app/favicon.ico">
 </head>
 <body class="h-full font-['Poppins',_sans-serif] text-slate-800">
     <div id="app-wrapper" class="flex h-full">
-        <main class="flex-1 p-8 overflow-y-auto">
+        <main class="flex-1 p-4 md:p-8 overflow-y-auto">
             <div class="max-w-4xl mx-auto">
-                <h1 id="page-title" class="text-3xl font-bold text-slate-900 mb-8"></h1>
-                
-                <article class="prose lg:prose-xl bg-white p-8 rounded-xl shadow-sm">
-                    <h2>Getting Started</h2>
-                    <p>Welcome to the Catering Management app! This tool is designed to be your all-in-one solution for managing clients, creating a library of your dishes, and planning events down to the last detail.</p>
-                    
-                    <h3>Core Concepts</h3>
-                    <p>The app is built around three main components: your <strong>Dish Library</strong>, your <strong>Clients</strong>, and your <strong>Events</strong>. For the best experience, it's recommended to add some dishes and clients before creating your first event.</p>
-                    <ul>
-                        <li><strong>Data Storage:</strong> All your data is saved instantly and securely in your browser's local storage. There's no need to manually save your work.</li>
-                        <li><strong>Backups:</strong> For safety and portability, you can back up your data to a file on your computer using the features on the <strong>Preferences</strong> page.</li>
-                    </ul>
+                <h1 id="page-title" class="text-3xl font-bold text-slate-900"></h1>
 
-                    <hr>
+                <section class="mt-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm prose max-w-none">
+                        <h2>Getting Started</h2>
+                        <p>Welcome to the Catering Management app! This tool is designed to be your all-in-one solution for managing clients, creating a library of your dishes, and planning events down to the last detail.</p>
+                        
+                        <h3>Core Concepts</h3>
+                        <p>The app is built around three main components: your <strong>Dish Library</strong>, your <strong>Clients</strong>, and your <strong>Events</strong>. For the best experience, it's recommended to add some dishes and clients before creating your first event.</p>
+                    </div>
+                </section>
 
-                    <h2>Feature Guide</h2>
+                <section class="mt-8">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">Feature Guide</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                            <h3 class="text-lg font-semibold">Dashboard</h3>
+                            <p class="text-sm text-slate-600">Get a quick overview of all events scheduled within the next 7 days.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            <h3 class="text-lg font-semibold">Event Management</h3>
+                            <p class="text-sm text-slate-600">Create, manage, and print detailed event orders, complete with custom menus and financial details.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col gap-4">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                           <h3 class="text-lg font-semibold">Client Management</h3>
+                           <p class="text-sm text-slate-600">Keep a record of all your clients, including their contact details and address for invoices.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v11.494m-9-5.747h18"/></svg>
+                            <h3 class="text-lg font-semibold">Dish Library</h3>
+                            <p class="text-sm text-slate-600">A central repository of all your menu items, including categories and price per serving, for easy access.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col gap-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            <h3 class="text-lg font-semibold">Preferences & Data</h3>
+                            <p class="text-sm text-slate-600">Manage your data with Auto-Save for safety or use the manual Import/Export tools for portability.</p>
+                        </div>
+                    </div>
+                </section>
 
-                    <h3>Dashboard</h3>
-                    <p>The dashboard is your home screen. It provides an at-a-glance view of all events scheduled within the <strong>next 7 days</strong>, helping you focus on what's immediately important.</p>
-
-                    <h3>Dish Library</h3>
-                    <p>This is where you build your menu. You can add, edit, and delete every dish your company offers. Each dish includes a name, category, price per serving, and a description. This library is used to build menus when you create an event.</p>
-                    
-                    <h3>Client Management</h3>
-                    <p>Keep track of your customers here. You can add new clients or edit existing ones. When you create an event, you will select a client from this list.</p>
-
-                    <h3>Event Management</h3>
-                    <h4>The Event List</h4>
-                    <p>This page lists all your events. It's designed for quick access and powerful filtering:</p>
-                    <ul>
-                        <li><strong>Sorting:</strong> Events are sorted to show upcoming events first (starting with the soonest) and past events last.</li>
-                        <li><strong>Highlighting:</strong> Events happening <strong>today</strong> are highlighted with a light blue background and a side border for easy identification.</li>
-                        <li><strong>Search:</strong> Use the search bar to instantly find events by a client's name or the event's venue.</li>
-                        <li><strong>Filters:</strong> You can filter the list to show only events with a specific status (e.g., "Confirmed") or view all events scheduled for a specific date using the date picker.</li>
-                    </ul>
-                    <h4>Creating & Editing an Event</h4>
-                    <p>This is the most detailed page. When you create or edit an event, you can:</p>
-                    <ul>
-                        <li><strong>Select a Client:</strong> Start typing a client's name in the searchable dropdown to quickly find and select them.</li>
-                        <li><strong>Set Event Details:</strong> Add the date, time, venue, and guest count. The app will warn you if you select a date where the client already has another booking. You cannot create new events in the past.</li>
-                        <li><strong>Build a Menu:</strong>
-                            <ul>
-                                <li>Click "Add Dish" to open a pop-up of your entire Dish Library.</li>
-                                <li>As you select dishes, the pop-up shows you an <strong>estimated cost</strong> based on the guest count.</li>
-                                <li>When you add dishes, their quantity will automatically default to the event's guest count. You can then change the quantity for each dish individually.</li>
-                                <li>If you change the main guest count, the app will ask if you want to update all dish quantities to match.</li>
-                                <li>The <strong>Total Estimated Cost</strong> updates in real-time as you build the menu.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    
-                    <hr>
-
-                    <h2>Preferences & Data Management</h2>
-                    <p>This page gives you full control over your data backups.</p>
-                    <h4>Auto-Save (Recommended)</h4>
-                    <p>This is the best way to keep your data safe. After a one-time setup where you choose a file on your computer, the app will automatically save a backup to that file every 15 seconds, but <strong>only if you've made changes</strong>. This is highly efficient and provides peace of mind against data loss.</p>
-                    
-                    <h4>Manual Import / Export</h4>
-                    <p>You can also manually save a complete snapshot of your data (Export) or restore your app from a backup file (Import). This is useful for moving your data to a new computer.</p>
-
-                    <hr>
-
-                    <h2>Frequently Asked Questions (FAQ)</h2>
-                    
-                    <h4>Can I use this app on multiple devices?</h4>
-                    <p>Not simultaneously. The data is stored locally in the browser on a single computer. To move your data from one computer to another, use the <strong>Export</strong> feature on the old computer and the <strong>Import</strong> feature on the new one.</p>
-                    
-                    <h4>What happens if I delete a Client or a Dish?</h4>
-                    <p>If you delete a client or a dish, any events that used them will be affected. A deleted client's name will show as "N/A" in the event list, and a deleted dish will disappear from any event menus it was part of. This action cannot be undone, so please be careful.</p>
-
-                </article>
+                <section class="mt-8">
+                     <h2 class="text-2xl font-bold text-slate-800 mb-4">Frequently Asked Questions</h2>
+                     <div class="space-y-4">
+                        <details class="group bg-white p-4 rounded-lg shadow-sm">
+                            <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
+                                <span>Can I use this app on multiple devices?</span>
+                                <span class="transition-transform group-open:rotate-180">
+                                    <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                                </span>
+                            </summary>
+                            <div class="text-slate-600 mt-3">
+                                Not simultaneously. The data is stored locally in the browser on a single computer. To move your data, use the <strong>Export</strong> feature on the old computer and the <strong>Import</strong> feature on the new one.
+                            </div>
+                        </details>
+                        <details class="group bg-white p-4 rounded-lg shadow-sm">
+                            <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
+                                <span>What is Auto-Save and why should I use it?</span>
+                                <span class="transition-transform group-open:rotate-180">
+                                    <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                                </span>
+                            </summary>
+                            <div class="text-slate-600 mt-3">
+                                Auto-Save is the recommended way to keep your data safe. After setting it up once, the app will automatically back up your data to a local file every 15 seconds, but only when changes have been made. This protects you from accidental data loss.
+                            </div>
+                        </details>
+                         <details class="group bg-white p-4 rounded-lg shadow-sm">
+                            <summary class="flex justify-between items-center font-medium cursor-pointer list-none">
+                                <span>What happens if I delete a Client or a Dish?</span>
+                                <span class="transition-transform group-open:rotate-180">
+                                    <svg fill="none" height="24" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
+                                </span>
+                            </summary>
+                            <div class="text-slate-600 mt-3">
+                                If you delete a client or a dish, any events that used them will be affected. A deleted client's name will show as "N/A", and a deleted dish will disappear from any event menus it was part of. This action cannot be undone.
+                            </div>
+                        </details>
+                     </div>
+                </section>
             </div>
         </main>
     </div>
