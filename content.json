@@ -16,7 +16,8 @@
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome back!",
-    "upcomingEvents": "Upcoming Events"
+    "upcomingEvents": "Upcoming Events",
+    "opportunities": "Opportunities & Reminders"
   },
   "events": {
     "title": "Event Management",
@@ -32,6 +33,8 @@
     "venue": "Venue",
     "guestCount": "Guest Count",
     "status": "Status",
+    "eventType": "Event Type",
+    "eventDescription": "Event Description / Notes",
     "menuBuilder": "Menu & Budget Builder",
     "addDish": "Add Dish",
     "totalCost": "Total Estimated Cost",

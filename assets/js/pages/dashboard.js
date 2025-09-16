@@ -5,7 +5,7 @@ const formatCurrency = (amount) => `₹${Number(amount).toLocaleString('en-IN', 
 const ICONS = {
     calendar: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`,
     revenue: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 11V3m0 8h8m-8 0l-4 4m12 0l-4-4m4 4v8m-12-8h8m-8 0l-4 4m12 0l-4-4m4 4v8"/></svg>`,
-    outstanding: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01M12 12h.01M12 12V7m0 5v.01M12 12h.01M12 12V7m0 5h.01M12 12V7m0 5v4m0 0H9m3 0h3m-3 0v-4m0 4H9m3 0h3m-6 0v-4m0 4h3m3 0h3m-3 0v-4m0 4h3m-3 0h3"/></svg>`,
+    outstanding: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08 .402 2.599 1M12 8V7m0 1v.01M12 12h.01M12 12V7m0 5v.01M12 12h.01M12 12V7m0 5h.01M12 12V7m0 5v4m0 0H9m3 0h3m-3 0v-4m0 4H9m3 0h3m-6 0v-4m0 4h3m3 0h3m-3 0v-4m0 4h3m-3 0h3"/></svg>`,
     users: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>`,
 };
 
@@ -16,6 +16,7 @@ export function init(content) {
     renderKpiCards();
     renderUpcomingEvents(content.upcomingEvents);
     renderEventStatusChart();
+    renderPredictiveInsights(content.opportunities);
 }
 
 function calculateEventTotal(event) {
@@ -122,6 +123,52 @@ function renderEventStatusChart() {
                 </div>
                 <div class="w-full bg-slate-200 rounded-full h-2.5">
                     <div class="${statusColors[status] || 'bg-gray-400'} h-2.5 rounded-full" style="width: ${percentage}%"></div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderPredictiveInsights(title) {
+    document.getElementById('opportunities-title').textContent = title;
+    const container = document.getElementById('predictive-insights');
+    const allEvents = storage.getEvents();
+    const allClients = storage.getClients();
+    const today = new Date();
+    const oneMonthFromNow = new Date();
+    oneMonthFromNow.setMonth(today.getMonth() + 1);
+
+    const recurringEventTypes = ['Birthday', 'Anniversary'];
+    const opportunities = [];
+
+    allEvents.forEach(event => {
+        if (!recurringEventTypes.includes(event.eventType) || !event.date) return;
+
+        const eventDate = new Date(event.date);
+        
+        const anniversaryDate = new Date(today.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+
+        if (anniversaryDate > today && anniversaryDate <= oneMonthFromNow) {
+            opportunities.push(event);
+        }
+    });
+    
+    if(opportunities.length === 0) {
+        container.innerHTML = '<div class="bg-white p-6 rounded-xl shadow-sm"><p class="text-slate-500">No upcoming opportunities in the next month.</p></div>';
+        return;
+    }
+
+    container.innerHTML = opportunities.sort((a,b) => new Date(a.date) - new Date(b.date)).map(event => {
+        const client = allClients.find(c => c.id === event.clientId);
+        if(!client) return '';
+        return `
+            <div class="bg-white p-4 rounded-xl shadow-sm">
+                 <div class="flex justify-between items-center">
+                    <div>
+                        <p class="font-semibold text-sky-600">${client.name}</p>
+                        <p class="text-sm text-slate-500">Had a <b>${event.eventType}</b> event around this time last year. Good time to follow up!</p>
+                    </div>
+                    <a href="event-detail.html" class="text-sm font-medium bg-slate-100 px-3 py-1 rounded-lg hover:bg-slate-200 whitespace-nowrap">New Event</a>
                 </div>
             </div>
         `;

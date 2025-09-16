@@ -192,7 +192,6 @@ function handleStatusChange(e) {
 // --- DETAIL PAGE LOGIC ---
 
 function initEventDetailPage(content) {
-    // Explicitly set text content for each element to be more robust
     document.getElementById('page-title').textContent = content.createTitle;
     document.getElementById('event-details-title').textContent = content.eventDetails;
     document.getElementById('client-name-label').textContent = content.clientName;
@@ -200,6 +199,8 @@ function initEventDetailPage(content) {
     document.getElementById('venue-label').textContent = content.venue;
     document.getElementById('guest-count-label').textContent = content.guestCount;
     document.getElementById('status-label').textContent = content.status;
+    document.getElementById('event-type-label').textContent = content.eventType;
+    document.getElementById('event-description-label').textContent = content.eventDescription;
     document.getElementById('menu-builder-title').textContent = content.menuBuilder;
     document.getElementById('add-dish-button').textContent = content.addDish;
     document.getElementById('total-cost-label').textContent = content.totalCost;
@@ -266,6 +267,8 @@ function populateForm(event) {
     document.getElementById('venue').value = event.venue || '';
     document.getElementById('guest-count').value = event.guestCount || '';
     document.getElementById('status').value = event.status || 'Tentative';
+    document.getElementById('event-type').value = event.eventType || '';
+    document.getElementById('event-description').value = event.eventDescription || '';
     document.getElementById('advance-paid').value = event.advancePaid || 0;
     document.getElementById('discount').value = event.discount || 0;
     document.getElementById('payment-collected').checked = event.paymentCollected || false;
@@ -298,6 +301,8 @@ function saveEventForm() {
         venue: venue,
         guestCount: guestCount,
         status: document.getElementById('status').value,
+        eventType: document.getElementById('event-type').value,
+        eventDescription: document.getElementById('event-description').value,
         menu: currentEventMenu,
         advancePaid: parseFloat(document.getElementById('advance-paid').value) || 0,
         discount: parseFloat(document.getElementById('discount').value) || 0,
