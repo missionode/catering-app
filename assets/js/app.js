@@ -12,12 +12,108 @@ const INDICATOR_STATUS = {
     FAILED: `<div class="flex items-center gap-2 text-red-400 text-xs"><div class="w-2 h-2 rounded-full bg-red-500"></div><span>Auto-Save Failed</span></div>`,
 };
 
-const routes = { /* ... routes object ... */ };
-const pageInitializers = { /* ... pageInitializers object ... */ };
+const routes = {
+    '/index.html': 'dashboard',
+    '/events.html': 'events',
+    '/event-detail.html': 'events',
+    '/clients.html': 'clients',
+    '/dishes.html': 'dishes',
+    '/preferences.html': 'preferences',
+    '/help.html': 'help'
+};
 
-async function loadContent() { /* ... unchanged ... */ }
-function renderSidebar() { /* ... unchanged ... */ }
-function initMobileMenu() { /* ... unchanged ... */ }
+const pageInitializers = {
+    dashboard: () => import('./pages/dashboard.js').then(module => module.init(content.dashboard)),
+    events: () => import('./pages/events.js').then(module => module.init(content)),
+    clients: () => import('./pages/clients.js').then(module => module.init(content.clients)),
+    dishes: () => import('./pages/dishes.js').then(module => module.init(content.dishes)),
+    preferences: () => import('./pages/preferences.js').then(module => module.init(content.preferences)),
+    help: () => import('./pages/help.js').then(module => module.init(content.help))
+};
+
+async function loadContent() {
+    try {
+        const response = await fetch('content.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const jsonContent = await response.json();
+        Object.assign(content, jsonContent);
+    } catch (error) {
+        console.error('Failed to load content.json:', error);
+        Object.assign(content, { navigation: {}, appName: 'App' }); 
+    }
+}
+
+function renderSidebar() {
+    const nav = content.navigation || {};
+    const appName = content.appName || 'App';
+    
+    const path = window.location.pathname;
+    const currentPage = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
+
+    const sidebarHTML = `
+        <aside id="sidebar" class="w-64 bg-indigo-600 text-white flex flex-col fixed inset-y-0 left-0 z-30 transform -translate-x-full transition-transform duration-300 ease-in-out md:relative md:translate-x-0">
+            <div class="h-20 flex items-center justify-center border-b border-indigo-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-sky-400 rounded-lg flex items-center justify-center font-bold text-indigo-800 text-xl">
+                        ${appName.charAt(0) || 'A'}
+                    </div>
+                    <span class="text-2xl font-bold">${appName}</span>
+                </div>
+            </div>
+            <nav class="flex-1 p-4 space-y-2">
+                <a href="index.html" class="nav-link ${currentPage === 'index.html' ? 'active' : ''}">${nav.dashboard || 'Dashboard'}</a>
+                <a href="events.html" class="nav-link ${['events.html', 'event-detail.html'].includes(currentPage) ? 'active' : ''}">${nav.events || 'Events'}</a>
+                <a href="clients.html" class="nav-link ${currentPage === 'clients.html' ? 'active' : ''}">${nav.clients || 'Clients'}</a>
+                <a href="dishes.html" class="nav-link ${currentPage === 'dishes.html' ? 'active' : ''}">${nav.dishes || 'Dishes'}</a>
+            </nav>
+            <div class="p-4 border-t border-indigo-700 space-y-2">
+                 <a href="preferences.html" class="nav-link ${currentPage === 'preferences.html' ? 'active' : ''}">${nav.preferences || 'Preferences'}</a>
+                 <a href="help.html" class="nav-link ${currentPage === 'help.html' ? 'active' : ''}">${nav.help || 'Help'}</a>
+                 <div id="autosave-indicator" class="px-1 pt-2"></div>
+            </div>
+        </aside>
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-20 hidden md:hidden"></div>
+    `;
+
+    const style = document.createElement('style');
+    style.textContent = `
+        .nav-link { display: block; padding: 0.75rem 1rem; border-radius: 0.5rem; transition: background-color 0.2s; font-weight: 500; }
+        .nav-link:hover { background-color: rgba(255, 255, 255, 0.1); }
+        .nav-link.active { background-color: rgba(255, 255, 255, 0.2); }
+    `;
+    document.head.appendChild(style);
+
+    const wrapper = document.getElementById('app-wrapper');
+    wrapper.insertAdjacentHTML('afterbegin', sidebarHTML);
+}
+
+function initMobileMenu() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const pageTitle = document.getElementById('page-title');
+
+    if (!pageTitle || !sidebar || !overlay) return;
+
+    const menuButton = document.createElement('button');
+    menuButton.id = 'menu-toggle';
+    menuButton.className = 'p-2 rounded-md text-slate-600 hover:bg-slate-200 md:hidden';
+    menuButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>`;
+    
+    pageTitle.insertAdjacentElement('beforebegin', menuButton);
+
+    const toggleSidebar = () => {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+    };
+
+    menuButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleSidebar();
+    });
+    overlay.addEventListener('click', toggleSidebar);
+}
 
 function updateAutosaveIndicator(status) {
     const indicator = document.getElementById('autosave-indicator');
@@ -55,7 +151,7 @@ async function startAutoSave() {
                 if(syncStatusEl) {
                     syncStatusEl.textContent = `Last synced: ${new Date().toLocaleTimeString()}`;
                 }
-                setTimeout(() => updateAutosaveIndicator('ACTIVE'), 500); // Show "Active" again after a short delay
+                setTimeout(() => updateAutosaveIndicator('ACTIVE'), 500);
             } catch (err) {
                  console.error("Auto-save failed. Permission may have been revoked.", err);
                  updateAutosaveIndicator('FAILED');
@@ -75,9 +171,11 @@ async function main() {
     await startAutoSave();
 
     let pageFile = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+    
     if (pageFile === '' || pageFile.endsWith('/')) {
         pageFile = 'index.html';
     }
+    
     const routePath = '/' + pageFile;
     const pageKey = routes[routePath];
     

@@ -134,22 +134,55 @@ function renderPredictiveInsights(title) {
     const container = document.getElementById('predictive-insights');
     const allEvents = storage.getEvents();
     const allClients = storage.getClients();
+    
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
     const oneMonthFromNow = new Date();
-    oneMonthFromNow.setMonth(today.getMonth() + 1);
+    oneMonthFromNow.setDate(today.getDate() + 30);
+    
+    const elevenMonthsAgo = new Date();
+    elevenMonthsAgo.setMonth(today.getMonth() - 11);
+    
+    const tenMonthsAgo = new Date();
+    tenMonthsAgo.setMonth(today.getMonth() - 10);
 
     const recurringEventTypes = ['Birthday', 'Anniversary'];
-    const opportunities = [];
+    let opportunities = [];
 
     allEvents.forEach(event => {
-        if (!recurringEventTypes.includes(event.eventType) || !event.date) return;
-
-        const eventDate = new Date(event.date);
+        if (!event.date || !event.eventType) return;
         
-        const anniversaryDate = new Date(today.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+        const eventDate = new Date(event.date);
+        if (eventDate >= today) return;
 
-        if (anniversaryDate > today && anniversaryDate <= oneMonthFromNow) {
-            opportunities.push(event);
+        const client = allClients.find(c => c.id === event.clientId);
+        if (!client) return;
+
+        // Logic for recurring types like Birthdays
+        if (recurringEventTypes.includes(event.eventType)) {
+            let anniversaryDate = new Date(today.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+            if (anniversaryDate < today) {
+                anniversaryDate.setFullYear(today.getFullYear() + 1);
+            }
+            if (anniversaryDate >= today && anniversaryDate <= oneMonthFromNow) {
+                opportunities.push({
+                    event: event,
+                    client: client,
+                    message: `Had a <b>${event.eventType}</b> event around this time last year. Good time to follow up!`
+                });
+            }
+        }
+
+        // Logic for corporate events
+        if (event.eventType === 'Corporate') {
+            if (eventDate >= elevenMonthsAgo && eventDate < tenMonthsAgo) {
+                 opportunities.push({
+                    event: event,
+                    client: client,
+                    message: `It's been almost a year since their last <b>Corporate</b> event. Time to reconnect!`
+                });
+            }
         }
     });
     
@@ -158,17 +191,16 @@ function renderPredictiveInsights(title) {
         return;
     }
 
-    container.innerHTML = opportunities.sort((a,b) => new Date(a.date) - new Date(b.date)).map(event => {
-        const client = allClients.find(c => c.id === event.clientId);
-        if(!client) return '';
+    container.innerHTML = opportunities.map(opp => {
         return `
             <div class="bg-white p-4 rounded-xl shadow-sm">
-                 <div class="flex justify-between items-center">
-                    <div>
-                        <p class="font-semibold text-sky-600">${client.name}</p>
-                        <p class="text-sm text-slate-500">Had a <b>${event.eventType}</b> event around this time last year. Good time to follow up!</p>
+                 <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <p class="font-semibold text-sky-600">${opp.client.name}</p>
+                        <p class="text-sm text-slate-500">${opp.message}</p>
+                        <p class="text-xs text-slate-400 mt-1">Original Event: ${new Date(opp.event.date).toLocaleDateString()}</p>
                     </div>
-                    <a href="event-detail.html" class="text-sm font-medium bg-slate-100 px-3 py-1 rounded-lg hover:bg-slate-200 whitespace-nowrap">New Event</a>
+                    <a href="event-detail.html" class="text-sm font-medium bg-slate-100 px-3 py-1 rounded-lg hover:bg-slate-200 whitespace-nowrap ml-4">New Event</a>
                 </div>
             </div>
         `;

@@ -115,9 +115,45 @@ async function handleManualSync() {
 }
 
 async function handleExport() {
-    // ... unchanged
+    try {
+        const handle = await window.showSaveFilePicker({
+            suggestedName: `catering-backup-${new Date().toISOString().split('T')[0]}.json`,
+            types: [{ description: 'JSON Files', accept: { 'application/json': ['.json'] } }],
+        });
+        const dataString = JSON.stringify(storage.getData(), null, 2);
+        await fileSystem.writeFile(handle, dataString);
+        alert('Data exported successfully!');
+    } catch (err) {
+        if (err.name !== 'AbortError') {
+            console.error('Export failed:', err);
+            alert('Error exporting data. Check the console for details.');
+        }
+    }
 }
 
 async function handleImport() {
-    // ... unchanged
+    if (!confirm('This will overwrite all existing data. Are you sure you want to continue?')) {
+        return;
+    }
+    try {
+        const [handle] = await window.showOpenFilePicker({
+            types: [{ description: 'JSON Files', accept: { 'application/json': ['.json'] } }],
+        });
+        const file = await handle.getFile();
+        const content = await file.text();
+        const data = JSON.parse(content);
+        
+        if (data && typeof data === 'object' && 'dishes' in data && 'clients' in data && 'events' in data) {
+            storage.saveData(data);
+            alert('Data imported successfully! The page will now reload.');
+            window.location.reload();
+        } else {
+            alert('This does not appear to be a valid backup file.');
+        }
+    } catch (err) {
+        if (err.name !== 'AbortError') {
+            console.error('Import failed:', err);
+            alert('Error importing data. Check the console for details.');
+        }
+    }
 }
