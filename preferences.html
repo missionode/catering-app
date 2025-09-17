@@ -9,8 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="icon" type="image/x-icon" href="/catering-app/favicon.ico">
-
 </head>
 <body class="h-full font-['Poppins',_sans-serif] text-slate-800">
     <div id="app-wrapper" class="flex h-full">
@@ -30,7 +28,15 @@
                             <p id="autosave-filename" class="mt-2 font-medium text-indigo-600 bg-indigo-50 p-2 rounded-md"></p>
                             <p id="autosave-permission-status" class="mt-2 text-sm font-medium h-4"></p>
                             <p id="autosave-sync-status" class="mt-1 text-sm text-slate-500 h-4"></p>
-                            <button id="autosave-button-forget" class="mt-4 text-sm text-red-600 hover:underline">Forget this file and disable auto-save</button>
+                            <div class="mt-4 flex items-center gap-4">
+                                <button id="autosave-button-forget" class="text-sm text-red-600 hover:underline">Forget this file and disable auto-save</button>
+                                <button id="manual-sync-button" class="bg-sky-500 text-white px-4 py-2 text-sm rounded-lg shadow-sm hover:bg-sky-600 transition-colors flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5M20 4h-5v5M4 20h5v-5"></path>
+                                    </svg>
+                                    Sync Now
+                                </button>
+                            </div>
                         </div>
                     </div>
 
