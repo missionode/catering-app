@@ -6,6 +6,7 @@ let autoSaveInterval = null;
 
 const routes = {
     '/index.html': 'dashboard',
+    '/': 'dashboard',
     '/events.html': 'events',
     '/event-detail.html': 'events',
     '/clients.html': 'clients',
@@ -156,7 +157,7 @@ async function startAutoSave() {
                  await fileSystem.deleteFileHandle();
             }
         }
-    }, 15000);
+    }, 3000); // Changed to 3000ms (3 seconds)
 }
 
 
@@ -169,7 +170,7 @@ async function main() {
 
     let pageFile = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
     
-    if (pageFile === '' || pageFile.endsWith('/')) { // Handles root like "/", "/repo/", etc.
+    if (pageFile === '' || pageFile.endsWith('/')) {
         pageFile = 'index.html';
     }
     
